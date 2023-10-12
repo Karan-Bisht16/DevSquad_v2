@@ -1,0 +1,43 @@
+<%- include('./partials/header.ejs') %>
+
+    <link rel="stylesheet" href="./css/style_sign_up.css">
+
+    <div class="main">
+        <section class="Container">
+            <div class="Signup">
+                <h3>Sign up</h3>
+                <form action="/sign_up" method="post">
+                    <input type="text" name="userName" placeholder="User name" required autofocus/>
+                    <input type="email" name="userEmail" placeholder="Email address" required />
+                    <div class="password">
+                        <input id="userSignUpPassword" type="password" name="userPassword" placeholder="Password" required />
+                        <button id="showSignUpPassword" type="button"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <div class="check">
+                        <input type="checkbox" id="signupCheck" required>
+                        <label for="signupCheck">I accept all terms & condition</label>
+                    </div>
+                    <input type="submit" value="Signup">
+                </form>
+            </div>
+            <div class="Signup Login">
+                <a href="#top">Login</a>
+                <form action="/login" method="post">
+                    <input type="email" name="userEmail" placeholder="Email address" required />
+                    <div class="password">
+                        <input id="userLoginPassword" name="userPassword" type="password" placeholder="Password" required />
+                        <button id="showLoginPassword" type="button"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <a href="#">Forget password</a>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+            <div id="error" class="hidden" style="color: red; font-size: 12px;"><%= locals.error %></div>
+        </section>
+    </div>
+
+<%- include('./partials/footer.ejs') %>
+    
+    <script src="./js/script_sign_up.js"></script>
+</body>
+</html>

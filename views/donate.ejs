@@ -1,0 +1,68 @@
+<%- include('./partials/header.ejs') %>
+
+    <link rel="stylesheet" href="./css/style_donate.css">
+
+    <div class="main">
+        <h1>Donate Here</h1>
+        <div class="registrationForm">
+            <form>
+                <label>Name: <br></label>
+                <% if (locals.user) { %>
+                    <input id="userName" type="text" placeholder=" Enter your name" name="name" value="<%= locals.user %>" required autofocus>
+                <% } else { %>
+                    <input id="userName" type="text" placeholder=" Enter your name" name="name" required autofocus>
+                <% } %>
+                <label>Date of Donation: <br></label>
+                <input id="dateOfDonation" type="date" name="dateOfDonation" required>
+            
+                <label>Type of Donation: </label>   
+                <select id="option" name="donationType">
+                    <option>Clothes</option>
+                    <option>Books</option>
+                    <option>Toys</option>
+                    <option>Food</option>
+                </select>
+                <br>
+
+                <div class="hidden" id="eventDiv" style="margin-top: 7.5px;">
+                    <label for="eventType">Type of Event: </label>
+                    <select id="eventType" name="eventType">
+                        <option>Marriage</option>
+                        <option>Religious Ceremony</option>
+                        <option>Cultural Fest/Event</option>
+                    </select>
+                </div>
+    
+                <label style="margin-top: 7.5px;">Mobile: <br></label>
+                <input id="mobileNumber" type="number" placeholder=" Enter your mobile number" name="mobileNumber" required>
+    
+                <label>Pickup Address: <br></label><br>
+                <div class="forCurrLoc">
+                    <input id="currLoc" name="currLoc" type="checkbox" location="<%= locals.currentLocation%>">
+                    <label for="currLoc" style="font-size: 12px;">Use current location</label>
+                </div>
+                <div id="locResult" class="hidden">
+                    <p id="humanReadableAddress" style="font-size: 14px;"></p>
+                    <p>Latitude:<span id="lat" style="font-size: 14px;"></span></p>
+                    <p>Longitude:<span id="lng" style="font-size: 14px;"></span></p>
+                </div>
+
+                <div class="divider" style="position: relative;">
+                    <hr>
+                    <p><span>OR</span></p>
+                    <textarea id="addressTextArea" name="pickupAddress" rows="3" placeholder=" Enter desired pickup address" required></textarea>
+                    <div id="error" class="hidden" style="color: red; font-size: 12px; position: absolute; bottom: 0px"></div>
+                </div>
+
+                
+                <button id="submitBtn" type="button">Donate</button>
+            </form>
+        </div>
+    </div>
+    <div id="coordinates" class="hidden"></div>
+
+<%- include('./partials/footer.ejs') %>
+<% console.log("\t\tRecieved: ",locals.currentLocation) %>
+    <script src="./js/script_donate.js"></script>
+</body>
+</html>
