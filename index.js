@@ -13,18 +13,26 @@ app.use(express.static(__dirname+'/public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'views'));
 
-app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true
-}));
-
 const mongoose = require('mongoose');
 const connection = require('./database');
 connection();
 
+const MongoStore = require('connect-mongo');
+const mongoStore = MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: 'sessions',
+    mongooseConnection: mongoose.connection,
+});
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    store: mongoStore,
+}));
 
 const donation_Schema = new mongoose.Schema({
     donar_name: {
