@@ -88,6 +88,9 @@ header{
     width: 30px;
     background-color: inherit;
 }
+#mainTitle {
+    font-family: 'Young Serif', serif;
+}
 .login{
     margin-left:30px;
 }

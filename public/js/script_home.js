@@ -58,12 +58,16 @@ async function sendPostionToServer(object) {
                 iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Green_LocationMarker.png',
                 iconSize: [30, 30]
             })
-            const customIconToy = L.icon({
+            const customIconFood = L.icon({
                 iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Red_LocationMarker.png',
                 iconSize: [30, 30]
             })
-            const customIconBook = L.icon({
+            const customIconClothes = L.icon({
                 iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/df/Amber_LocationMarker.png',
+                iconSize: [30, 30]
+            })
+            const customIconBooks = L.icon({
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Green_LocationMarker.png',
                 iconSize: [30, 30]
             })
     
@@ -72,11 +76,15 @@ async function sendPostionToServer(object) {
                 let customLng = parseFloat(nearbyNGOsArray[i]['longitude']).toFixed(5);
                 let type = nearbyNGOsArray[i]['typeOfDonation'];
                 if (type==='Food') {
-                    const Toys = L.marker([customLat, customLng], {icon: customIconToy}).addTo(map);
+                    const Toys = L.marker([customLat, customLng], {icon: customIconFood}).addTo(map);
                     Toys.bindPopup(`Food donation at ${nearbyNGOsArray[i]['humanReadableAddress']}`);
-                } else {
-                    const Books = L.marker([customLat, customLng], {icon: customIconBook}).addTo(map);
-                    Books.bindPopup(`Book donation at ${nearbyNGOsArray[i]['humanReadableAddress']}`);
+                } else if (type==='Clothes') {
+                    const Clothes = L.marker([customLat, customLng], {icon: customIconClothes}).addTo(map);
+                    Clothes.bindPopup(`Clothes donation at ${nearbyNGOsArray[i]['humanReadableAddress']}`);
+                } else if (type==='Books') {
+                    const Books = L.marker([customLat, customLng], {icon: customIconBooks}).addTo(map);
+                    Books.bindPopup(`NGO at ${nearbyNGOsArray[i]['humanReadableAddress']}`);
+
                 }
             }
         } else {

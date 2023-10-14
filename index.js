@@ -156,11 +156,11 @@ app.post('/', (req, res)=>{
             Object.assign(result.user_pickup_address.coordinates, {humanReadableAddress: result.user_pickup_address.humanReadableAddress});
             Object.assign(result.user_pickup_address.coordinates, {typeOfDonation: result.type_of_donation});
             req.session.nearbyNGOs.push(result.user_pickup_address.coordinates);
-            console.log(result.user_pickup_address.coordinates);
         })
+        console.log(req.session.nearbyNGOs);
         res.send({data: req.session.nearbyNGOs});
     })
-    .catch (error=>{
+    .catch (error=>{ 
         console.log("Error: ",error);
     })
 });
