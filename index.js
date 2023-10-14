@@ -24,7 +24,6 @@ const connection = require('./database');
 connection();
 
 const bcrypt = require('bcrypt');
-const { error } = require('console');
 const saltRounds = 10;
 
 const donation_Schema = new mongoose.Schema({
@@ -98,39 +97,8 @@ const NGO_Schema = new mongoose.Schema({
 const NGO = mongoose.model('NGO', NGO_Schema);
 const User = mongoose.model('User', user_Schema);
 const Donation = mongoose.model('Donation', donation_Schema);
-// const ngo = new NGO({
-//     NGO_name: 'HelpAge India',
-//     NGO_registration_number: '9270',
-//     NGO_address: 'C-14 Qutab Institutional Area New Delhi-110016',
-//     NGO_webpage: 'http://www.helpageindia.org'
-// })
-// ngo.save();
-// const userPassword = 'karan@1603';
-// bcrypt.hash(userPassword, saltRounds, (err, hashedPassword) => {
-//     if (err) throw err;
-//     const user = new User({
-//         user_name: 'Karan Bisht',
-//         user_email: 'karan161003@gmail.com',
-//         user_password: hashedPassword
-//     });
-//     user.save();
-//     console.log(hashedPassword);
-// });
-
-// User.find()
-// .then (function(result){
-//     result.forEach(user=>{
-//         console.log(user.user_password);
-//     });
-//     mongoose.disconnect();
-// })
-// .catch (error=>{
-//     console.log("Error: ",error)
-// });
 
 app.get('/', (req, res)=>{
-    // req.session.userID;
-    // console.log(req.session.userID);
     req.session.location = req.session.location || '';
     console.log("[GET]  `/`      Current User Location: "+req.session.location);
     if (req.session.userID) {
@@ -157,7 +125,6 @@ app.post('/', (req, res)=>{
             Object.assign(result.user_pickup_address.coordinates, {typeOfDonation: result.type_of_donation});
             req.session.nearbyNGOs.push(result.user_pickup_address.coordinates);
         })
-        console.log(req.session.nearbyNGOs);
         res.send({data: req.session.nearbyNGOs});
     })
     .catch (error=>{ 
@@ -186,7 +153,6 @@ app.get('/donate', (req, res)=>{
 
 app.post('/donate/submit', (req, res)=>{
     const recievedData = req.body;
-    console.log(req.body);
     if (recievedData["name"]==='') {
         res.send({error:'Please enter username'});  
     } else if (recievedData["dateOfDonation"]==='') {
@@ -209,15 +175,11 @@ app.post('/donate/submit', (req, res)=>{
             type_of_donation: recievedData["typeOfDonation"],
         }
         if (recievedData["typeOfDonation"]==='Food'){
-            // Object.assign(donationData, {type_of_event: recievedData["typeOfEvent"]});
             donationData.type_of_event = recievedData["typeOfEvent"];
         }
-        console.log(donationData);
         const donation = new Donation(donationData);
         donation.save()
         .then ((result)=>{
-            console.log(typeof result._id);
-            console.log(result._id);
             User.updateOne({user_email: req.session.userID}, {$push: {user_donations: result._id}})
             .then (()=>{
                 console.log('Done');
@@ -230,7 +192,6 @@ app.post('/donate/submit', (req, res)=>{
             console.log("Error: ", error);
         })
         res.send({error:null});
-        console.log(req.body);
     }
 });
 
@@ -265,7 +226,6 @@ app.get('/sign_up', (req, res)=>{
 });
 app.post('/sign_up',(req, res)=>{
     //assuming email to be unique
-    // let newUser;
     bcrypt.hash(req.body["userPassword"], saltRounds, (err, hashedPassword) => {
         if (err) throw err;
         var newUser = new User({
@@ -287,7 +247,6 @@ app.post('/sign_up',(req, res)=>{
 });
 
 app.post('/login', (req, res)=>{
-    // console.log(req.body);
     User.findOne({user_email: req.body["userEmail"]})
     .then (user=>{
         if (user) {
