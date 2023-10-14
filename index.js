@@ -2,6 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require("path");
 require('dotenv').config();
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const app = express();
 const PORT = 1600;
@@ -23,9 +25,6 @@ const mongoStore = MongoStore.create({
     collectionName: 'sessions',
     mongooseConnection: mongoose.connection,
 });
-
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 app.use(session({
     secret: 'your-secret-key',
