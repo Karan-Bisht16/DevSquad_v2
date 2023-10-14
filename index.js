@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require("path");
 require('dotenv').config();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const app = express();
